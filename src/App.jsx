@@ -27,7 +27,7 @@ const whatsappPhone = "905318947938";
 const address = "Kayseri / Merkez";
 const email = "info@floryapalet.com";
 const logoSrc = "/images/florya-palet-logo.png";
-const ownerName = "Abdulsamed Eyice";
+const ownerName = "Abdussamed Eyice";
 const workingHours = "Pazartesi - Pazar 08:00 - 20:00";
 const mapsUrl = "https://maps.app.goo.gl/2mahGcGMCYG5zLu56";
 
