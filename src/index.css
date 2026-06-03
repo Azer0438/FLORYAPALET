@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Inter", Arial, sans-serif;
+    background: #f7f3eb;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .section-kicker {
+    @apply mb-3 text-sm font-black uppercase tracking-normal text-clay;
+  }
+
+  .section-title {
+    @apply text-3xl font-black leading-tight tracking-normal text-forest-900 sm:text-5xl;
+  }
+
+  .form-field {
+    @apply grid gap-2 text-sm font-black text-forest-900/70;
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    @apply w-full rounded-md border border-forest-900/15 bg-white px-4 py-3 text-base font-semibold text-forest-900 outline-none transition focus:border-forest-700 focus:ring-4 focus:ring-forest-500/15;
+  }
+
+  .product-visual {
+    @apply relative grid h-64 place-items-center overflow-hidden bg-white;
+  }
+
+  .product-visual::before {
+    content: "";
+    @apply absolute inset-x-5 top-5 h-[calc(100%-40px)] rounded-md border-2 border-clay/70;
+  }
+
+  .product-sun {
+    @apply absolute h-36 w-36 rounded-full bg-gradient-to-b from-[#ffd15b] to-[#f48a00];
+  }
+
+  .product-object {
+    @apply relative z-10 h-28 w-52 -skew-x-12 rounded-md shadow-soft;
+    transform: perspective(560px) rotateX(58deg) rotateZ(-16deg);
+    transform-style: preserve-3d;
+  }
+
+  .product-object span {
+    @apply absolute left-0 right-0 h-5 rounded-sm bg-timber-300 shadow-sm;
+  }
+
+  .product-object span:nth-child(1) {
+    top: 0;
+  }
+
+  .product-object span:nth-child(2) {
+    top: 27px;
+  }
+
+  .product-object span:nth-child(3) {
+    top: 54px;
+  }
+
+  .product-object span:nth-child(4) {
+    top: 81px;
+  }
+
+  .product-object::before,
+  .product-object::after {
+    content: "";
+    @apply absolute bottom-[-18px] h-5 rounded-sm bg-timber-700;
+  }
+
+  .product-object::before {
+    left: 12px;
+    width: 66px;
+  }
+
+  .product-object::after {
+    right: 12px;
+    width: 66px;
+  }
+
+  .product-visual-cp .product-object {
+    @apply w-56;
+  }
+
+  .product-visual-plastic .product-sun {
+    @apply bg-gradient-to-b from-[#f1c744] to-[#d96b28];
+  }
+
+  .product-visual-plastic .product-object span {
+    @apply bg-[#15191a];
+  }
+
+  .product-visual-plastic .product-object::before,
+  .product-visual-plastic .product-object::after {
+    @apply bg-[#050707];
+  }
+
+  .product-visual-crate .product-object {
+    @apply h-32 w-44 skew-x-0;
+    transform: perspective(620px) rotateX(52deg) rotateZ(-9deg);
+  }
+
+  .product-visual-crate .product-object span {
+    @apply h-7 bg-timber-300;
+  }
+
+  .product-visual-crate .product-object span:nth-child(1) {
+    top: 0;
+  }
+
+  .product-visual-crate .product-object span:nth-child(2) {
+    top: 34px;
+  }
+
+  .product-visual-crate .product-object span:nth-child(3) {
+    top: 68px;
+  }
+
+  .product-visual-crate .product-object span:nth-child(4) {
+    top: 102px;
+  }
+
+  .product-visual-turpal .product-object span {
+    @apply bg-[#b97835];
+  }
+
+  .product-visual-standard .product-object {
+    @apply w-60;
+  }
+}
