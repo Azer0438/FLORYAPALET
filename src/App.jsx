@@ -1,4 +1,4 @@
-import {
+﻿import {
   ArrowRight,
   BadgeCheck,
   Boxes,
@@ -27,7 +27,6 @@ const whatsappPhone = "905318947938";
 const address = "Kayseri / Merkez";
 const email = "info@floryapalet.com";
 const logoSrc = "/images/florya-palet-logo.png";
-const ownerName = "Abdussamed Eyice";
 const workingHours = "Pazartesi - Pazar 08:00 - 20:00";
 const mapsUrl = "https://maps.app.goo.gl/2mahGcGMCYG5zLu56";
 
@@ -411,17 +410,13 @@ function App() {
               <p className="section-kicker">Hakkımızda</p>
               <h2 className="section-title">Kayseri'de ikinci el palet alım satımında güvenilir ve planlı çözüm.</h2>
               <p className="mt-5 leading-8 text-forest-900/68">
-                {businessName}, firma sahibi {ownerName} yönetiminde Kayseri/Merkez ve çevresinde ahşap palet, plastik palet ve ahşap ambalaj ürünlerinin alım-satımını yapmak üzere hizmet verir.
+                {businessName}, Kayseri/Merkez ve çevresinde ahşap palet, plastik palet ve ahşap ambalaj ürünlerinin alım-satımını yapmak üzere hizmet verir.
               </p>
               <p className="mt-4 leading-8 text-forest-900/68">
                 Amacımız, depolama ve sevkiyat süreçlerinde işletmelerin ihtiyacı olan paleti doğru zamanda, doğru kaliteyle ve net fiyatlandırmayla ulaştırmaktır.
               </p>
 
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-md border border-forest-900/10 bg-white p-5">
-                  <p className="text-sm font-black uppercase tracking-normal text-clay">Firma Sahibi</p>
-                  <p className="mt-2 text-2xl font-black">{ownerName}</p>
-                </div>
+              <div className="mt-8 max-w-md">
                 <div className="rounded-md border border-forest-900/10 bg-white p-5">
                   <p className="text-sm font-black uppercase tracking-normal text-clay">Çalışma Saatleri</p>
                   <p className="mt-2 text-2xl font-black">{workingHours}</p>
@@ -837,3 +832,4 @@ function App() {
 }
 
 export default App;
+
