@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/blog/:slug",
-      "destination": "/index.html"
+      "source": "/blog/depo-is-yerlerinde-kis-oncesi-dogalgaz-tesisati-kontrolu",
+      "destination": "/blog/depo-is-yerlerinde-kis-oncesi-dogalgaz-tesisati-kontrolu/index.html"
     }
   ]
 }

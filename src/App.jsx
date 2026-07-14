@@ -8,7 +8,6 @@
   ClipboardCheck,
   Clock3,
   Factory,
-  Forklift,
   Hammer,
   MapPin,
   Menu,
@@ -20,7 +19,8 @@
   Warehouse,
   X,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { useMemo, useState } from "react";
 
 const businessName = "Florya Palet";
 const siteUrl = "https://www.kayserifloryapalet.com.tr";
@@ -243,9 +243,11 @@ const blogPost = {
   slug: "depo-is-yerlerinde-kis-oncesi-dogalgaz-tesisati-kontrolu",
   path: "/blog/depo-is-yerlerinde-kis-oncesi-dogalgaz-tesisati-kontrolu",
   title: "Depo ve İş Yerlerinde Kış Öncesi Doğalgaz Tesisatı Kontrolü",
-  seoTitle: "Depolarda Kış Öncesi Doğalgaz Kontrolü | Florya Palet",
+  seoTitle: "Depo ve İş Yerlerinde Kış Öncesi Doğalgaz Kontrolü | Florya Palet",
   description:
     "Depo, atölye ve iş yerlerinde kış öncesinde doğalgaz tesisatı, ısıtma sistemi, vanalar ve kullanım alanlarında kontrol edilmesi gereken noktalar.",
+  ogDescription:
+    "Depo ve iş yerlerinde kış öncesi doğalgaz tesisatı, ısıtma sistemi ve güvenli depolama düzeni için kontrol rehberi.",
   category: "Depo Düzeni",
   dateLabel: "15 Temmuz 2026",
   readTime: "5 dk okuma",
@@ -263,8 +265,35 @@ const blogPost = {
   ],
 };
 
-function setMetaContent(selector, content) {
-  document.querySelector(selector)?.setAttribute("content", content);
+const blogRoutes = [blogPost.path];
+const routesToPrerender = ["/", ...blogRoutes];
+
+function getCanonicalUrl(pathname) {
+  return pathname === "/" ? `${siteUrl}/` : `${siteUrl}${pathname}`;
+}
+
+function getSeoForPath(pathname) {
+  if (pathname === blogPost.path) {
+    return {
+      title: blogPost.seoTitle,
+      description: blogPost.description,
+      canonical: getCanonicalUrl(blogPost.path),
+      ogTitle: blogPost.title,
+      ogDescription: blogPost.ogDescription,
+      ogUrl: getCanonicalUrl(blogPost.path),
+      ogType: "article",
+    };
+  }
+
+  return {
+    title: defaultPageTitle,
+    description: defaultMetaDescription,
+    canonical: getCanonicalUrl("/"),
+    ogTitle: defaultPageTitle,
+    ogDescription: "Kayseri/Merkez çıkışlı ikinci el palet alımı, satışı, tamiri ve toplu tedarik hizmetleri.",
+    ogUrl: getCanonicalUrl("/"),
+    ogType: "website",
+  };
 }
 
 function goTo(id) {
@@ -276,6 +305,33 @@ function goTo(id) {
   }
 
   window.location.href = `/#${id}`;
+}
+
+function getCurrentPath(initialPath) {
+  if (initialPath) {
+    return initialPath;
+  }
+
+  if (typeof window !== "undefined") {
+    return window.location.pathname;
+  }
+
+  return "/";
+}
+
+function Seo({ title, description, canonical, ogTitle, ogDescription, ogUrl, ogType }) {
+  return (
+    <Helmet prioritizeSeoTags>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <link rel="canonical" href={canonical} />
+      <meta property="og:title" content={ogTitle} />
+      <meta property="og:description" content={ogDescription} />
+      <meta property="og:url" content={ogUrl} />
+      <meta property="og:type" content={ogType} />
+      <meta property="og:image" content={`${siteUrl}/images/florya-palet-og.png`} />
+    </Helmet>
+  );
 }
 
 function ProductIllustration({ variant }) {
@@ -486,11 +542,10 @@ function BlogArticle() {
   );
 }
 
-function App() {
-  const isBlogPage = window.location.pathname === blogPost.path;
-  const pageTitle = isBlogPage ? blogPost.seoTitle : defaultPageTitle;
-  const pageDescription = isBlogPage ? blogPost.description : defaultMetaDescription;
-  const pageUrl = isBlogPage ? `${siteUrl}${blogPost.path}` : siteUrl;
+function App({ initialPath, includeSeo = true }) {
+  const currentPath = getCurrentPath(initialPath);
+  const isBlogPage = currentPath === blogPost.path;
+  const seo = getSeoForPath(currentPath);
   const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -522,24 +577,9 @@ function App() {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
   };
 
-  useEffect(() => {
-    document.title = pageTitle;
-    setMetaContent('meta[name="description"]', pageDescription);
-    setMetaContent('meta[property="og:title"]', pageTitle);
-    setMetaContent('meta[property="og:description"]', pageDescription);
-    setMetaContent('meta[property="og:url"]', pageUrl);
-
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute("href", pageUrl);
-  }, [pageDescription, pageTitle, pageUrl]);
-
   return (
     <div className="min-h-screen bg-paper text-forest-900">
+      {includeSeo && <Seo {...seo} />}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-timber-300/20 bg-forest-900 text-white shadow-[0_12px_36px_rgba(16,34,25,0.2)]">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
           <button className="flex min-w-0 items-center gap-3 text-left" onClick={() => goTo("anasayfa")}>
@@ -1096,5 +1136,6 @@ function App() {
   );
 }
 
+export { blogPost, getSeoForPath, routesToPrerender };
 export default App;
 
