@@ -50,6 +50,30 @@
     @apply w-full rounded-md border border-forest-900/15 bg-white px-4 py-3 text-base font-semibold text-forest-900 outline-none transition focus:border-forest-700 focus:ring-4 focus:ring-forest-500/15;
   }
 
+  .prose-content {
+    @apply text-lg leading-8 text-forest-900/70;
+  }
+
+  .prose-content p {
+    @apply mb-5;
+  }
+
+  .prose-content h2 {
+    @apply mb-4 mt-10 text-2xl font-black leading-tight text-forest-900 sm:text-3xl;
+  }
+
+  .prose-content ul {
+    @apply mb-6 grid gap-2 pl-5;
+  }
+
+  .prose-content li {
+    @apply list-disc pl-1;
+  }
+
+  .prose-content a {
+    @apply font-black text-clay underline decoration-clay/35 underline-offset-4 transition hover:text-forest-700;
+  }
+
   .product-visual {
     @apply relative grid h-64 place-items-center overflow-hidden bg-white;
   }

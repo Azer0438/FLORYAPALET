@@ -3,6 +3,7 @@
   BadgeCheck,
   Boxes,
   Calculator,
+  CalendarDays,
   Check,
   ClipboardCheck,
   Clock3,
@@ -19,9 +20,13 @@
   Warehouse,
   X,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const businessName = "Florya Palet";
+const siteUrl = "https://www.kayserifloryapalet.com.tr";
+const defaultPageTitle = "Florya Palet | Kayseri 2. El Palet Alım Satımı";
+const defaultMetaDescription =
+  "Florya Palet, Kayseri/Merkez ve çevresinde ikinci el palet alımı, satışı, tamiri, seçimi ve toplu tedarik hizmetleri verir.";
 const phoneDisplay = "0531 894 79 38";
 const whatsappPhone = "905318947938";
 const address = "Kayseri / Merkez";
@@ -37,6 +42,7 @@ const navItems = [
   ["Alım Süreci", "surec"],
   ["Fiyat", "fiyat"],
   ["Bölgeler", "bolgeler"],
+  ["Blog", "blog"],
   ["SSS", "sss"],
   ["İletişim", "iletisim"],
 ];
@@ -231,8 +237,45 @@ const faqs = [
   ["Fiyat neden değişiyor?", "Ölçü, kondisyon, adet, kırık oranı, piyasa talebi, yükleme kolaylığı ve mesafe fiyatı doğrudan etkiler."],
 ];
 
+const dogtekServicesUrl = "https://www.dogtekdogalgazmuhendislik.com/kayseri-dogalgaz-hizmetleri";
+
+const blogPost = {
+  slug: "depo-is-yerlerinde-kis-oncesi-dogalgaz-tesisati-kontrolu",
+  path: "/blog/depo-is-yerlerinde-kis-oncesi-dogalgaz-tesisati-kontrolu",
+  title: "Depo ve İş Yerlerinde Kış Öncesi Doğalgaz Tesisatı Kontrolü",
+  seoTitle: "Depolarda Kış Öncesi Doğalgaz Kontrolü | Florya Palet",
+  description:
+    "Depo, atölye ve iş yerlerinde kış öncesinde doğalgaz tesisatı, ısıtma sistemi, vanalar ve kullanım alanlarında kontrol edilmesi gereken noktalar.",
+  category: "Depo Düzeni",
+  dateLabel: "15 Temmuz 2026",
+  readTime: "5 dk okuma",
+  image: "/images/palet-saha.png",
+  imageAlt: "Depoda istiflenmiş paletler ve çalışma alanı",
+  checklist: [
+    "Doğalgaz sayacı ve vanalar erişilebilir durumda mı?",
+    "Tesisatın önünde palet veya ürün bulunuyor mu?",
+    "Isıtma sistemi sorunsuz çalışıyor mu?",
+    "Cihazda hata kodu veya olağan dışı ses var mı?",
+    "İş yerinde sonradan tesisatı etkileyebilecek değişiklik yapıldı mı?",
+    "Havalandırma bölümleri açık mı?",
+    "Sorumlu çalışanlar acil durumda ne yapılacağını biliyor mu?",
+    "Teknik kontrol gerektiren bir durum bulunuyor mu?",
+  ],
+};
+
+function setMetaContent(selector, content) {
+  document.querySelector(selector)?.setAttribute("content", content);
+}
+
 function goTo(id) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const target = document.getElementById(id);
+
+  if (target) {
+    target.scrollIntoView({ behavior: "smooth" });
+    return;
+  }
+
+  window.location.href = `/#${id}`;
 }
 
 function ProductIllustration({ variant }) {
@@ -249,7 +292,205 @@ function ProductIllustration({ variant }) {
   );
 }
 
+function BlogPreviewSection() {
+  return (
+    <section id="blog" className="py-16 sm:py-24">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.75fr_1.25fr] lg:px-8">
+        <div>
+          <p className="section-kicker">Blog</p>
+          <h2 className="section-title">Depo, sevkiyat ve iş yeri düzeni için pratik notlar.</h2>
+          <p className="mt-5 leading-8 text-forest-900/65">
+            Palet depolama, saha düzeni ve işletme hazırlıklarıyla ilgili uygulanabilir rehberler.
+          </p>
+        </div>
+
+        <article className="overflow-hidden rounded-md border border-forest-900/10 bg-white shadow-sm">
+          <div className="grid md:grid-cols-[0.9fr_1.1fr]">
+            <img className="h-72 w-full object-cover md:h-full" src={blogPost.image} alt={blogPost.imageAlt} />
+            <div className="flex flex-col p-6 sm:p-8">
+              <div className="mb-5 flex flex-wrap gap-2 text-xs font-black uppercase tracking-normal">
+                <span className="rounded-md bg-forest-50 px-3 py-2 text-forest-700">{blogPost.category}</span>
+                <span className="rounded-md bg-timber-100 px-3 py-2 text-forest-900">{blogPost.readTime}</span>
+              </div>
+              <h3 className="text-2xl font-black leading-tight sm:text-3xl">{blogPost.title}</h3>
+              <p className="mt-4 leading-8 text-forest-900/66">{blogPost.description}</p>
+              <a
+                className="mt-8 inline-flex min-h-[48px] w-fit items-center justify-center gap-2 rounded-md bg-forest-700 px-5 font-black text-white transition hover:bg-forest-900"
+                href={blogPost.path}
+              >
+                Yazıyı Oku
+                <ArrowRight size={18} />
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  );
+}
+
+function BlogArticle() {
+  return (
+    <article className="bg-paper pt-28">
+      <header className="bg-forest-900 text-white">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8 lg:py-20">
+          <div>
+            <a className="mb-6 inline-flex items-center gap-2 rounded-md border border-white/18 bg-white/8 px-4 py-2 text-sm font-black text-white/82 transition hover:bg-white/12" href="/">
+              <ArrowRight className="rotate-180" size={17} />
+              Ana Sayfaya Dön
+            </a>
+            <div className="mb-5 flex flex-wrap gap-2 text-xs font-black uppercase tracking-normal">
+              <span className="rounded-md bg-timber-300 px-3 py-2 text-forest-900">{blogPost.category}</span>
+              <span className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white/80">
+                <CalendarDays size={15} />
+                {blogPost.dateLabel}
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-white/80">
+                <Clock3 size={15} />
+                {blogPost.readTime}
+              </span>
+            </div>
+            <h1 className="max-w-4xl text-4xl font-black leading-[1.04] tracking-normal sm:text-6xl">{blogPost.title}</h1>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/76">{blogPost.description}</p>
+          </div>
+          <div className="overflow-hidden rounded-md border border-white/12 bg-white/8 p-2">
+            <img className="h-[360px] w-full rounded object-cover" src={blogPost.image} alt={blogPost.imageAlt} />
+          </div>
+        </div>
+      </header>
+
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-8 lg:py-16">
+        <div className="rounded-md border border-forest-900/10 bg-white p-6 shadow-sm sm:p-10">
+          <div className="prose-content">
+            <p>
+              Kış aylarına girerken depo, atölye ve iş yerlerinde yalnızca ürün stoklarının ve çalışma alanlarının düzenlenmesi yeterli değildir. Isıtma sistemi, doğalgaz
+              tesisatı ve cihazların bulunduğu bölümlerin de kullanıma hazır olup olmadığı kontrol edilmelidir.
+            </p>
+            <p>
+              Özellikle uzun süre kullanılmayan ısıtma sistemleri, erişimi kapanmış vanalar veya çalışma alanında sonradan yapılan değişiklikler kış döneminde çeşitli
+              sorunlara neden olabilir. Bu nedenle kontrollerin havalar tamamen soğumadan önce yapılması önemlidir.
+            </p>
+
+            <h2>1. Tesisat çevresinin erişilebilir olduğundan emin olun</h2>
+            <p>
+              Depolarda paletler, paketleme malzemeleri ve ürünler zaman içerisinde doğalgaz tesisatının veya ısıtma cihazlarının bulunduğu alanların önüne
+              yerleştirilebilir.
+            </p>
+            <p>Aşağıdaki bölümlerin erişilebilir durumda kalmasına dikkat edilmelidir:</p>
+            <ul>
+              <li>Ana doğalgaz vanası</li>
+              <li>Sayaç bölümü</li>
+              <li>Kombi veya ısıtma cihazı</li>
+              <li>Tesisat boruları</li>
+              <li>Cihaz bağlantıları</li>
+              <li>Havalandırma alanları</li>
+            </ul>
+            <p>Acil bir kontrol veya teknik müdahale gerektiğinde bu bölümlere kolaylıkla ulaşılabilmesi gerekir.</p>
+
+            <h2>2. Depolama düzenini gözden geçirin</h2>
+            <p>
+              Paletlerin ve ürünlerin yalnızca boş bulunan alanlara gelişigüzel yerleştirilmesi çalışma düzenini zorlaştırabilir. Özellikle duvar boyunca ilerleyen
+              tesisatların, vanaların ve ısıtma sistemlerinin önü açık bırakılmalıdır.
+            </p>
+            <p>Paletlerin tesisat borularına dayanması veya yükleme sırasında borulara temas edebilecek biçimde yerleştirilmesi önlenmelidir.</p>
+            <p>
+              Forklift, transpalet ve diğer taşıma ekipmanlarının kullandığı güzergâhlar da tesisatın bulunduğu bölümler dikkate alınarak planlanmalıdır.
+            </p>
+
+            <h2>3. Isıtma sistemini kış başlamadan deneyin</h2>
+            <p>Isıtma cihazlarının ilk kez çok soğuk bir günde çalıştırılması, mevcut bir problemin geç fark edilmesine neden olabilir.</p>
+            <p>Kış başlamadan önce sistem çalıştırılarak aşağıdaki durumlar kontrol edilebilir:</p>
+            <ul>
+              <li>Cihazın normal biçimde devreye girip girmediği</li>
+              <li>Isıtmanın çalışma alanlarına yeterli biçimde ulaşıp ulaşmadığı</li>
+              <li>Cihaz ekranında hata kodu bulunup bulunmadığı</li>
+              <li>Tesisatta olağan dışı ses olup olmadığı</li>
+              <li>Isıtma sisteminde basınç veya dolaşım sorunu yaşanıp yaşanmadığı</li>
+            </ul>
+            <p>Herhangi bir problem fark edildiğinde cihaza veya tesisata doğrudan müdahale etmek yerine uzman desteği alınmalıdır.</p>
+
+            <h2>4. İş yerinde sonradan yapılan değişiklikleri değerlendirin</h2>
+            <p>Depo veya iş yerinde yapılan bazı değişiklikler mevcut doğalgaz ve ısıtma sistemini etkileyebilir.</p>
+            <p>Örneğin:</p>
+            <ul>
+              <li>Bölme duvar eklenmesi</li>
+              <li>Isıtma cihazının yerinin değiştirilmesi</li>
+              <li>Yeni çalışma alanı oluşturulması</li>
+              <li>Havalandırma açıklıklarının kapatılması</li>
+              <li>Tesisat yakınına raf veya makine yerleştirilmesi</li>
+              <li>Kullanım alanının büyütülmesi</li>
+            </ul>
+            <p>gibi durumlarda mevcut sistemin yeni yerleşim düzenine uygunluğu değerlendirilmelidir.</p>
+            <p>
+              Kayseri’de iş yeri doğalgaz tesisatı, proje ve ısıtma sistemi konusunda destek almak için{" "}
+              <a href={dogtekServicesUrl} target="_blank" rel="noopener">
+                Doğtek Doğalgaz ve Mühendislik’in Kayseri doğalgaz hizmetlerini
+              </a>{" "}
+              inceleyebilirsiniz.
+            </p>
+
+            <h2>5. Çalışanların vana ve sayaç alanlarını bilmesini sağlayın</h2>
+            <p>
+              İş yerinde yalnızca işletme sahibinin değil, sorumlu çalışanların da doğalgaz sayacı ve ana vananın bulunduğu yeri bilmesi faydalıdır.
+            </p>
+            <p>
+              Ancak çalışanlar tesisatı sökmeye, değiştirmeye veya arızayı kendi imkânlarıyla gidermeye çalışmamalıdır. Tesisat ve cihazlarla ilgili işlemler gerekli
+              yetkinliğe sahip kişiler tarafından yapılmalıdır.
+            </p>
+
+            <h2>6. Gaz kokusu durumunda müdahale etmeyin</h2>
+            <p>
+              İş yerinde gaz kokusu fark edilmesi halinde elektrik düğmelerine dokunulmamalı, ateş veya kıvılcım oluşturabilecek cihazlar kullanılmamalı ve güvenli bir
+              alandan 187 Doğal Gaz Acil Hattı aranmalıdır. Aksa Doğalgaz’ın acil durum rehberi de gaz kokusu halinde ortamdan çıktıktan sonra 187’nin aranmasını
+              belirtmektedir.
+            </p>
+
+            <h2>Kış öncesi iş yeri kontrol listesi</h2>
+            <p>Kış dönemi başlamadan önce şu maddeler gözden geçirilebilir:</p>
+            <ul>
+              {blogPost.checklist.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            <p>
+              Planlı yapılan kontroller, iş yerinin kış dönemine daha düzenli hazırlanmasına yardımcı olur. Depolama alanının doğru planlanması ise hem ürünlerin hem de
+              tesisat çevresinin daha kontrollü kullanılmasını sağlar.
+            </p>
+            <p>Florya Palet olarak işletmelerin palet alımı, satımı, tamiri ve toplu palet ihtiyaçları için Kayseri ve çevresinde hizmet sunuyoruz.</p>
+          </div>
+        </div>
+
+        <aside className="h-fit rounded-md border border-forest-900/10 bg-white p-6 shadow-sm lg:sticky lg:top-28">
+          <p className="section-kicker">Kontrol Listesi</p>
+          <h2 className="text-2xl font-black leading-tight">Kış gelmeden önce hızlıca gözden geçirin.</h2>
+          <div className="mt-6 grid gap-3">
+            {blogPost.checklist.slice(0, 5).map((item) => (
+              <div key={item} className="flex gap-3 rounded-md bg-paper p-3 text-sm font-bold leading-6 text-forest-900/72">
+                <ClipboardCheck className="mt-0.5 shrink-0 text-clay" size={18} />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+          <a
+            className="mt-6 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-md bg-timber-300 px-5 font-black text-forest-900 transition hover:bg-timber-100"
+            href={`https://wa.me/${whatsappPhone}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Palet İçin Teklif Al
+            <ArrowRight size={18} />
+          </a>
+        </aside>
+      </div>
+    </article>
+  );
+}
+
 function App() {
+  const isBlogPage = window.location.pathname === blogPost.path;
+  const pageTitle = isBlogPage ? blogPost.seoTitle : defaultPageTitle;
+  const pageDescription = isBlogPage ? blogPost.description : defaultMetaDescription;
+  const pageUrl = isBlogPage ? `${siteUrl}${blogPost.path}` : siteUrl;
   const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -280,6 +521,22 @@ function App() {
   const updateForm = (event) => {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
   };
+
+  useEffect(() => {
+    document.title = pageTitle;
+    setMetaContent('meta[name="description"]', pageDescription);
+    setMetaContent('meta[property="og:title"]', pageTitle);
+    setMetaContent('meta[property="og:description"]', pageDescription);
+    setMetaContent('meta[property="og:url"]', pageUrl);
+
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", pageUrl);
+  }, [pageDescription, pageTitle, pageUrl]);
 
   return (
     <div className="min-h-screen bg-paper text-forest-900">
@@ -344,6 +601,10 @@ function App() {
       </header>
 
       <main id="anasayfa">
+        {isBlogPage ? (
+          <BlogArticle />
+        ) : (
+          <>
         <section className="relative min-h-[92vh] overflow-hidden text-white">
           <img className="absolute inset-0 h-full w-full object-cover" src="/images/palet-saha.png" alt="İstiflenmiş ikinci el palet sahası" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,34,25,.94),rgba(16,34,25,.68),rgba(16,34,25,.18)),linear-gradient(0deg,rgba(16,34,25,.7),rgba(16,34,25,.12)_58%)]" />
@@ -740,6 +1001,8 @@ function App() {
           </div>
         </section>
 
+        <BlogPreviewSection />
+
         <section id="sss" className="bg-white py-16 sm:py-24">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
@@ -759,6 +1022,8 @@ function App() {
             </div>
           </div>
         </section>
+          </>
+        )}
       </main>
 
       <footer id="iletisim" className="bg-[#0b1510] text-white">
