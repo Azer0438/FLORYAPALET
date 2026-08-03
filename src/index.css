@@ -11,12 +11,14 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
     margin: 0;
     font-family: "Inter", Arial, sans-serif;
     background: #f7f3eb;
+    overflow-x: hidden;
   }
 
   button,

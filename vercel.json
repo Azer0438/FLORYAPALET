@@ -1,6 +1,30 @@
 {
   "rewrites": [
     {
+      "source": "/ikinci-el-palet-alimi",
+      "destination": "/ikinci-el-palet-alimi/index.html"
+    },
+    {
+      "source": "/ikinci-el-palet-satisi",
+      "destination": "/ikinci-el-palet-satisi/index.html"
+    },
+    {
+      "source": "/sifir-palet-satisi",
+      "destination": "/sifir-palet-satisi/index.html"
+    },
+    {
+      "source": "/euro-palet",
+      "destination": "/euro-palet/index.html"
+    },
+    {
+      "source": "/palet-fiyat-teklifi",
+      "destination": "/palet-fiyat-teklifi/index.html"
+    },
+    {
+      "source": "/hizmet-bolgeleri",
+      "destination": "/hizmet-bolgeleri/index.html"
+    },
+    {
       "source": "/blog/depo-is-yerlerinde-kis-oncesi-dogalgaz-tesisati-kontrolu",
       "destination": "/blog/depo-is-yerlerinde-kis-oncesi-dogalgaz-tesisati-kontrolu/index.html"
     }

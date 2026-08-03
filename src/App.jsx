@@ -20,7 +20,7 @@
   X,
 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const businessName = "Florya Palet";
 const siteUrl = "https://www.kayserifloryapalet.com.tr";
@@ -203,6 +203,231 @@ const regions = [
   "Yahyalı",
 ];
 
+const serviceAreaRegions = [
+  "Kayseri Merkez",
+  "Melikgazi",
+  "Kocasinan",
+  "Talas",
+  "Hacılar",
+  "İncesu",
+  "Develi",
+  "Bünyan",
+  "Yahyalı",
+  "Yeşilhisar",
+  "Tomarza",
+  "Pınarbaşı",
+  "Sarıoğlan",
+  "Sarız",
+  "Felahiye",
+  "Özvatan",
+  "Akkışla",
+  "Organize Sanayi",
+  "Mimarsinan OSB",
+  "Serbest Bölge",
+];
+
+const servicePages = [
+  {
+    path: "/ikinci-el-palet-alimi",
+    navLabel: "2. El Palet Alımı",
+    eyebrow: "Palet Alımı",
+    title: "Kayseri İkinci El Palet Alımı",
+    seoTitle: "Kayseri İkinci El Palet Alımı | Florya Palet",
+    description:
+      "Kayseri ve ilçelerinde kullanılmış ahşap palet, Euro palet, standart palet, CP palet ve tamirlik paletler için yerinde değerlendirme ve toplu alım hizmeti.",
+    ogDescription:
+      "Kayseri ikinci el palet alımı için yerinde kontrol, hızlı fiyatlandırma, yükleme planı ve toplu palet değerlendirme hizmeti.",
+    image: "/images/palet-saha.png",
+    imageAlt: "Kayseri ikinci el palet alımı için istiflenmiş ahşap palet sahası",
+    highlights: [
+      ["Yerinde kontrol", "Palet tipi, adet ve kondisyon sahada netleşir."],
+      ["Toplu alım", "Depo, fabrika ve sevkiyat dönüşü paletler değerlendirilir."],
+      ["Hızlı teklif", "Fotoğraf ve konum bilgisiyle ön fiyat hazırlanır."],
+    ],
+    introTitle: "Depoda bekleyen paletleri hızlı ve planlı şekilde değerlendiriyoruz.",
+    paragraphs: [
+      "İkinci el palet alımında en doğru fiyat; paletin ölçüsü, kırık oranı, kullanım durumu, adet ve yükleme kolaylığı birlikte değerlendirilerek çıkar.",
+      "Florya Palet, Kayseri merkezli saha planıyla işletmelerin elinde bekleyen kullanılabilir, tamirlik veya geri kazanıma uygun paletleri toplu olarak değerlendirir.",
+      "Euro palet, standart ahşap palet, CP palet ve özel ölçü paletlerde fotoğrafla ön değerlendirme yapılabilir; adet yüksek olduğunda yerinde kontrol ve araç planı hazırlanır.",
+    ],
+    detailTitle: "Hangi paletler alınır?",
+    details: [
+      ["Euro ve standart palet", "80x120, 100x120 ve yaygın sevkiyat ölçülerindeki ahşap paletler."],
+      ["Tamirlik palet", "Kırık tahta veya ayak sorunu olan, tamirle yeniden kullanılabilecek paletler."],
+      ["CP ve sanayi paleti", "Sanayi, üretim ve ağır yük sevkiyatında kullanılan dayanıklı palet grupları."],
+      ["Toplu depo stoğu", "Sevkiyat sonrası dönen veya depoda yer kaplayan adetli palet stokları."],
+    ],
+    checklistTitle: "Teklif için gereken bilgiler",
+    checklist: ["Palet tipi ve ölçüsü", "Yaklaşık adet", "Paletin kondisyonu", "Konum ve yükleme alanı", "Varsa fotoğraf veya video"],
+  },
+  {
+    path: "/ikinci-el-palet-satisi",
+    navLabel: "2. El Palet Satışı",
+    eyebrow: "Palet Satışı",
+    title: "Kayseri İkinci El Palet Satışı",
+    seoTitle: "Kayseri İkinci El Palet Satışı | Florya Palet",
+    description:
+      "Kayseri'de üretim, depo ve sevkiyat süreçleri için seçilmiş ikinci el Euro palet, standart ahşap palet, CP palet ve ekonomik palet satışı.",
+    ogDescription:
+      "Kayseri ikinci el palet satışı için seçme stok, ekonomik kalite seçenekleri, toplu teslimat ve düzenli tedarik planı.",
+    image: "/images/palet-sevkiyat.png",
+    imageAlt: "Kayseri ikinci el palet satışı için yüklemeye hazırlanan paletler",
+    highlights: [
+      ["Seçme stok", "Kullanıma hazır paletler sınıfına göre ayrılır."],
+      ["Ekonomik seçenek", "A ve B sınıfı paletlerle ihtiyaca göre fiyat dengesi kurulur."],
+      ["Planlı teslim", "Toplu siparişlerde araç ve teslim saati önceden netleşir."],
+    ],
+    introTitle: "Sevkiyat ve depolama akışınıza uygun ikinci el palet tedariği sağlıyoruz.",
+    paragraphs: [
+      "İkinci el palet satışı, doğru sınıflandırma yapıldığında işletmeler için önemli maliyet avantajı sağlar. Kullanım amacına göre seçme veya ekonomik palet tercih edilebilir.",
+      "Florya Palet, Kayseri ve çevresindeki üretici, depo, lojistik ve ticari işletmeler için Euro palet, standart ahşap palet ve sanayi paleti tedariği sunar.",
+      "Siparişlerde ölçü, kalite beklentisi, adet, teslim noktası ve kullanım alanı birlikte değerlendirilerek en uygun stok önerilir.",
+    ],
+    detailTitle: "Satışta sunduğumuz seçenekler",
+    details: [
+      ["A sınıfı seçme palet", "Daha düzgün yüzey ve sağlamlık beklentisi olan sevkiyatlar için."],
+      ["B sınıfı ekonomik palet", "İç lojistik, depo ve maliyet odaklı kullanım alanları için."],
+      ["Euro ve standart ölçü", "80x120, 100x120 ve stok durumuna göre farklı ölçüler."],
+      ["Düzenli tedarik", "Haftalık veya aylık palet ihtiyacı olan işletmelere planlı stok akışı."],
+    ],
+    checklistTitle: "Sipariş öncesi netleşenler",
+    checklist: ["Kullanım amacı", "Palet ölçüsü", "Kalite beklentisi", "Adet ve teslim noktası", "Teslim tarihi"],
+  },
+  {
+    path: "/sifir-palet-satisi",
+    navLabel: "Sıfır Palet Satışı",
+    eyebrow: "Yeni Palet",
+    title: "Kayseri Sıfır Palet Satışı",
+    seoTitle: "Kayseri Sıfır Palet Satışı | Florya Palet",
+    description:
+      "Kayseri'de standart ve özel ölçü sıfır ahşap palet satışı; üretim, ihracat, depolama ve düzenli sevkiyat ihtiyaçlarına uygun palet tedariki.",
+    ogDescription:
+      "Kayseri sıfır palet satışı için standart ölçü, özel ölçü, toplu üretim ve düzenli palet tedarik çözümleri.",
+    image: "/images/palet-tamir.png",
+    imageAlt: "Kayseri sıfır ahşap palet satışı için hazırlanan paletler",
+    highlights: [
+      ["Standart ölçü", "Yaygın depo ve sevkiyat ölçülerinde palet tedariği."],
+      ["Özel ölçü", "Ürün ve yük tipine göre ölçü planı yapılabilir."],
+      ["Düzenli akış", "Tekrarlı sevkiyat yapan işletmeler için stok planı kurulur."],
+    ],
+    introTitle: "Sıfır palet ihtiyacını kullanım amacına göre planlıyoruz.",
+    paragraphs: [
+      "Sıfır palet, ölçü standardı ve dayanım beklentisinin net olduğu üretim, depolama ve sevkiyat süreçlerinde tercih edilir.",
+      "Florya Palet, Kayseri'de standart ahşap palet ve ihtiyaç halinde özel ölçü palet taleplerini adet, teslim zamanı ve kullanım koşullarına göre değerlendirir.",
+      "Yeni palet tedariğinde hedef; yük tipine uygun ölçüyü, doğru malzeme yapısını ve sürdürülebilir teslim planını birlikte kurmaktır.",
+    ],
+    detailTitle: "Sıfır palet seçenekleri",
+    details: [
+      ["Standart ahşap palet", "Depo, üretim ve iç sevkiyat operasyonlarında kullanılan yaygın ölçüler."],
+      ["Özel ölçü palet", "Makine, ürün grubu veya sevkiyat ambalajına göre planlanan ölçüler."],
+      ["Toplu sipariş", "Düzenli ve adetli ihtiyaçlarda teslim takvimiyle ilerleyen tedarik."],
+      ["Kullanım odaklı seçim", "Yük ağırlığı, istif düzeni ve ekipman kullanımına göre öneri."],
+    ],
+    checklistTitle: "Fiyat için paylaşılacaklar",
+    checklist: ["İstenen ölçü", "Adet", "Yük tipi", "Teslim lokasyonu", "Termin beklentisi"],
+  },
+  {
+    path: "/euro-palet",
+    navLabel: "Euro Palet",
+    eyebrow: "80x120 Palet",
+    title: "Kayseri Euro Palet",
+    seoTitle: "Kayseri Euro Palet | 80x120 EPAL Palet | Florya Palet",
+    description:
+      "Kayseri'de 80x120 Euro palet alımı ve satışı; seçme ikinci el Euro palet, ekonomik Euro palet ve toplu tedarik seçenekleri.",
+    ogDescription:
+      "Kayseri Euro palet ihtiyaçları için 80x120 ölçü, ikinci el Euro palet alım satımı, stok ve toplu teslimat çözümleri.",
+    image: "/images/palet-saha.png",
+    imageAlt: "Kayseri Euro palet stok alanı",
+    highlights: [
+      ["80x120 ölçü", "Depo ve sevkiyat süreçlerinde yaygın kullanılan standart."],
+      ["Alım + satış", "Euro palet stokları hem alınır hem tedarik edilir."],
+      ["Sınıf seçimi", "Seçme, ekonomik ve tamirlik kondisyon ayrımı yapılır."],
+    ],
+    introTitle: "Euro palet ihtiyacında ölçü, kondisyon ve adet bilgisiyle hızlı ilerliyoruz.",
+    paragraphs: [
+      "Euro palet, 80x120 cm ölçüsüyle üretim, depolama, lojistik ve sevkiyat operasyonlarında en sık kullanılan palet tiplerinden biridir.",
+      "Florya Palet, Kayseri'de ikinci el Euro palet alımı ve satışı yapar; stok durumuna göre seçme veya ekonomik Euro palet seçenekleri sunar.",
+      "Alım ve satış işlemlerinde paletin sağlamlığı, ayak durumu, tahta yapısı, kırık oranı ve sevkiyat mesafesi dikkate alınır.",
+    ],
+    detailTitle: "Euro palet kullanım avantajları",
+    details: [
+      ["Standart ölçü", "80x120 cm yapısıyla birçok depo ekipmanına ve istif düzenine uygundur."],
+      ["Forklift uyumu", "Operasyonlarda forklift ve transpaletle pratik hareket sağlar."],
+      ["Hızlı stok dönüşü", "Yaygın kullanıldığı için alım ve satışta hızlı değerlendirilir."],
+      ["Kondisyon seçimi", "A sınıfı, B sınıfı veya tamirlik olarak ayrıştırılabilir."],
+    ],
+    checklistTitle: "Euro palet teklif bilgileri",
+    checklist: ["Alım mı satış mı?", "Adet", "Kondisyon", "Konum", "Teslim veya yükleme zamanı"],
+  },
+  {
+    path: "/palet-fiyat-teklifi",
+    navLabel: "Palet Fiyat Teklifi",
+    eyebrow: "Hızlı Teklif",
+    title: "Kayseri Palet Fiyat Teklifi",
+    seoTitle: "Kayseri Palet Fiyat Teklifi | Florya Palet",
+    description:
+      "İkinci el palet alımı, palet satışı, sıfır palet ve Euro palet ihtiyaçları için Kayseri'de hızlı fiyat teklifi alın.",
+    ogDescription:
+      "Kayseri palet fiyat teklifi için adet, ölçü, kondisyon, lokasyon ve teslim planına göre hızlı WhatsApp dönüşü.",
+    image: "/images/palet-sevkiyat.png",
+    imageAlt: "Kayseri palet fiyat teklifi için sevkiyat alanında bekleyen paletler",
+    highlights: [
+      ["Net bilgi", "Ölçü, adet ve kondisyon fiyatın temelini oluşturur."],
+      ["WhatsApp dönüşü", "Fotoğrafla ön değerlendirme hızlı yapılır."],
+      ["Şeffaf kriter", "Nakliye, yükleme ve stok durumu ayrıca konuşulur."],
+    ],
+    introTitle: "Palet fiyatı sahadaki gerçek duruma göre netleşir.",
+    paragraphs: [
+      "Palet fiyat teklifinde tek bir sabit rakam yerine paletin tipi, ölçüsü, kondisyonu, adet bilgisi ve taşıma planı birlikte değerlendirilir.",
+      "İkinci el palet alımı, ikinci el palet satışı, sıfır palet veya Euro palet taleplerinde fotoğraf, konum ve adet bilgisi paylaşıldığında hızlı ön fiyat hazırlanabilir.",
+      "Toplu işlemlerde yerinde kontrol, yükleme kolaylığı ve mesafe gibi detaylar fiyatı doğrudan etkilediği için teklif net ve anlaşılır şekilde paylaşılır.",
+    ],
+    detailTitle: "Fiyatı etkileyen başlıca kriterler",
+    details: [
+      ["Palet tipi", "Euro, standart, CP, plastik veya özel ölçü palet olması."],
+      ["Kondisyon", "A sınıfı, B sınıfı, tamirlik veya kırık oranı."],
+      ["Adet", "Toplu miktarlarda araç ve operasyon planının değişmesi."],
+      ["Konum", "Yükleme yeri, teslim noktası ve mesafenin netleşmesi."],
+    ],
+    checklistTitle: "Hızlı teklif için gönderin",
+    checklist: ["Palet fotoğrafı", "Ölçü veya palet tipi", "Adet", "Kayseri ilçe/konum", "Alım veya satış talebi"],
+  },
+  {
+    path: "/hizmet-bolgeleri",
+    navLabel: "Hizmet Bölgeleri",
+    eyebrow: "Kayseri ve İlçeleri",
+    title: "Kayseri Palet Hizmet Bölgeleri",
+    seoTitle: "Kayseri Palet Hizmet Bölgeleri | Florya Palet",
+    description:
+      "Florya Palet; Kayseri merkez, Melikgazi, Kocasinan, Talas, Hacılar, İncesu ve Kayseri ilçelerinde palet alımı, satışı ve tedarik hizmeti verir.",
+    ogDescription:
+      "Kayseri ve ilçelerinde ikinci el palet alımı, ikinci el palet satışı, sıfır palet, Euro palet ve toplu palet tedarik hizmet bölgeleri.",
+    image: "/images/palet-saha.png",
+    imageAlt: "Kayseri palet hizmet bölgeleri için saha ve stok alanı",
+    highlights: [
+      ["Kayseri merkez", "Melikgazi, Kocasinan, Talas ve Hacılar odağında hızlı dönüş."],
+      ["İlçe planı", "Adet ve mesafeye göre Kayseri ilçelerine servis planı."],
+      ["Sanayi bölgeleri", "OSB, Mimarsinan OSB ve Serbest Bölge talepleri için toplu akış."],
+    ],
+    introTitle: "Kayseri merkez ve ilçelerinde palet ihtiyacına göre araç planı oluşturuyoruz.",
+    paragraphs: [
+      "Hizmet bölgeleri, talebin palet adedi, ürün tipi, yükleme koşulu ve mesafesine göre planlanır. Kayseri merkezde hızlı dönüş, ilçelerde ise toplu talebe göre rota planı yapılır.",
+      "Florya Palet; ikinci el palet alımı, ikinci el palet satışı, sıfır palet satışı ve Euro palet tedariği için Kayseri merkez ve ilçelerine hizmet verir.",
+      "Organize sanayi bölgeleri, üretim sahaları, depolar ve sevkiyat noktalarında palet alım-satım süreci önceden netleştirilen saat ve lokasyon bilgisiyle ilerler.",
+    ],
+    detailTitle: "Öne çıkan hizmet noktaları",
+    details: [
+      ["Merkez ilçeler", "Melikgazi, Kocasinan, Talas ve Hacılar için hızlı değerlendirme."],
+      ["Sanayi bölgeleri", "Kayseri OSB, Mimarsinan OSB ve Serbest Bölge için toplu palet planı."],
+      ["Çevre ilçeler", "Adetli taleplerde Kayseri ilçelerine alım ve teslimat organizasyonu."],
+      ["Düzenli rota", "Haftalık veya aylık palet ihtiyacı olan işletmelere planlı servis."],
+    ],
+    checklistTitle: "Hizmet verilen bölgeler",
+    checklist: serviceAreaRegions.slice(0, 8),
+    regions: serviceAreaRegions,
+  },
+];
+
 const gallery = [
   {
     image: "/images/palet-saha.png",
@@ -265,15 +490,44 @@ const blogPost = {
   ],
 };
 
+const serviceRoutes = servicePages.map((page) => page.path);
+const servicePageMap = new Map(servicePages.map((page) => [page.path, page]));
 const blogRoutes = [blogPost.path];
-const routesToPrerender = ["/", ...blogRoutes];
+const routesToPrerender = ["/", ...serviceRoutes, ...blogRoutes];
+
+function normalizePathname(pathname) {
+  if (!pathname) {
+    return "/";
+  }
+
+  const normalizedPath = pathname.startsWith("/") ? pathname : `/${pathname}`;
+
+  return normalizedPath.length > 1 ? normalizedPath.replace(/\/+$/, "") : normalizedPath;
+}
 
 function getCanonicalUrl(pathname) {
-  return pathname === "/" ? `${siteUrl}/` : `${siteUrl}${pathname}`;
+  const normalizedPath = normalizePathname(pathname);
+
+  return normalizedPath === "/" ? `${siteUrl}/` : `${siteUrl}${normalizedPath}`;
 }
 
 function getSeoForPath(pathname) {
-  if (pathname === blogPost.path) {
+  const normalizedPath = normalizePathname(pathname);
+  const servicePage = servicePageMap.get(normalizedPath);
+
+  if (servicePage) {
+    return {
+      title: servicePage.seoTitle,
+      description: servicePage.description,
+      canonical: getCanonicalUrl(servicePage.path),
+      ogTitle: servicePage.title,
+      ogDescription: servicePage.ogDescription,
+      ogUrl: getCanonicalUrl(servicePage.path),
+      ogType: "website",
+    };
+  }
+
+  if (normalizedPath === blogPost.path) {
     return {
       title: blogPost.seoTitle,
       description: blogPost.description,
@@ -309,11 +563,11 @@ function goTo(id) {
 
 function getCurrentPath(initialPath) {
   if (initialPath) {
-    return initialPath;
+    return normalizePathname(initialPath);
   }
 
   if (typeof window !== "undefined") {
-    return window.location.pathname;
+    return normalizePathname(window.location.pathname);
   }
 
   return "/";
@@ -345,6 +599,173 @@ function ProductIllustration({ variant }) {
         <span />
       </div>
     </div>
+  );
+}
+
+function ServicePagesSection() {
+  return (
+    <section id="hizmetler" className="bg-white py-16 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+          <div className="max-w-3xl">
+            <p className="section-kicker">Hizmet Sayfaları</p>
+            <h2 className="section-title">Alım, satış, sıfır palet ve bölge talepleri için ayrı sayfalar.</h2>
+          </div>
+          <a className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-forest-700 px-5 font-black text-white" href="/palet-fiyat-teklifi">
+            Fiyat Teklifi Sayfası
+            <ArrowRight size={18} />
+          </a>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {servicePages.map((page) => (
+            <a
+              key={page.path}
+              className="group flex min-h-[260px] flex-col rounded-md border border-forest-900/10 bg-paper p-6 shadow-sm transition hover:-translate-y-1 hover:border-forest-700/35 hover:shadow-soft"
+              href={page.path}
+            >
+              <span className="text-sm font-black uppercase tracking-normal text-clay">{page.eyebrow}</span>
+              <h3 className="mt-3 text-2xl font-black leading-tight">{page.navLabel}</h3>
+              <p className="mt-4 flex-1 leading-7 text-forest-900/66">{page.ogDescription}</p>
+              <span className="mt-6 inline-flex items-center gap-2 font-black text-forest-700">
+                Sayfayı İncele
+                <ArrowRight className="transition group-hover:translate-x-1" size={17} />
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ServicePage({ page }) {
+  return (
+    <article className="bg-paper pt-28">
+      <header className="bg-forest-900 text-white">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:px-8 lg:py-20">
+          <div className="min-w-0 w-full max-w-[22rem] sm:max-w-none">
+            <a className="mb-6 inline-flex items-center gap-2 rounded-md border border-white/18 bg-white/8 px-4 py-2 text-sm font-black text-white/82 transition hover:bg-white/12" href="/">
+              <ArrowRight className="rotate-180" size={17} />
+              Ana Sayfaya Dön
+            </a>
+            <p className="section-kicker text-timber-300">{page.eyebrow}</p>
+            <h1 className="max-w-full break-words text-3xl font-black leading-[1.06] tracking-normal [overflow-wrap:anywhere] sm:text-5xl lg:text-6xl">{page.title}</h1>
+            <p className="mt-6 max-w-3xl break-words text-lg leading-8 text-white/76 [overflow-wrap:anywhere]">{page.description}</p>
+            <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              {page.highlights.map(([title, text]) => (
+                <div key={title} className="min-w-0 rounded-md border border-white/14 bg-white/8 p-4">
+                  <strong className="block text-lg text-timber-100">{title}</strong>
+                  <span className="mt-2 block text-sm leading-6 text-white/68">{text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-md border border-white/12 bg-white/8 p-2">
+            <img className="h-[380px] w-full rounded object-cover" src={page.image} alt={page.imageAlt} />
+          </div>
+        </div>
+      </header>
+
+      <section className="py-14 sm:py-20">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-8">
+          <div className="rounded-md border border-forest-900/10 bg-white p-6 shadow-sm sm:p-10">
+            <p className="section-kicker">{page.eyebrow}</p>
+            <h2 className="section-title">{page.introTitle}</h2>
+            <div className="prose-content mt-7">
+              {page.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+
+          <aside className="h-fit rounded-md border border-forest-900/10 bg-white p-6 shadow-sm lg:sticky lg:top-28">
+            <p className="section-kicker">{page.checklistTitle}</p>
+            <div className="mt-5 grid gap-3">
+              {page.checklist.map((item) => (
+                <div key={item} className="flex items-start gap-3 border-b border-forest-900/8 pb-3 last:border-b-0 last:pb-0">
+                  <ClipboardCheck className="mt-0.5 shrink-0 text-clay" size={18} />
+                  <span className="font-bold leading-6 text-forest-900/72">{item}</span>
+                </div>
+              ))}
+            </div>
+            <a
+              className="mt-6 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-md bg-timber-300 px-5 font-black text-forest-900 transition hover:bg-timber-100"
+              href="/#teklif"
+            >
+              Teklif Al
+              <ArrowRight size={18} />
+            </a>
+          </aside>
+        </div>
+      </section>
+
+      <section className="bg-white py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="section-kicker">Detaylar</p>
+            <h2 className="section-title">{page.detailTitle}</h2>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {page.details.map(([title, text]) => (
+              <article key={title} className="rounded-md border border-forest-900/10 bg-paper p-5">
+                <BadgeCheck className="mb-6 text-clay" size={26} />
+                <h3 className="text-lg font-black">{title}</h3>
+                <p className="mt-3 leading-7 text-forest-900/65">{text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {page.regions && (
+        <section className="py-14 sm:py-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 max-w-3xl">
+              <p className="section-kicker">Kayseri ve İlçeleri</p>
+              <h2 className="section-title">Hizmet verilen Kayseri bölgeleri.</h2>
+            </div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {page.regions.map((region) => (
+                <div key={region} className="rounded-md border border-forest-900/10 bg-white p-4 font-black shadow-sm">
+                  {region}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className="bg-forest-900 py-14 text-white sm:py-20">
+        <div className="mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-center lg:px-8">
+          <div>
+            <p className="section-kicker text-timber-300">Florya Palet</p>
+            <h2 className="max-w-3xl text-3xl font-black leading-tight sm:text-5xl">Palet ihtiyacınızı Kayseri çıkışlı planlayalım.</h2>
+            <p className="mt-5 max-w-2xl leading-8 text-white/70">
+              Adet, ölçü, kondisyon ve lokasyon bilgisini paylaşın; alım, satış veya düzenli tedarik için net dönüş yapalım.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+            <a
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-md bg-timber-300 px-6 font-black text-forest-900 transition hover:bg-timber-100"
+              href="/#teklif"
+            >
+              Fiyat Teklifi Al
+              <ArrowRight size={18} />
+            </a>
+            <a
+              className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-md border border-white/25 bg-white/8 px-6 font-black text-white transition hover:bg-white/12"
+              href={`https://wa.me/${whatsappPhone}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Phone size={18} />
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+    </article>
   );
 }
 
@@ -545,6 +966,7 @@ function BlogArticle() {
 function App({ initialPath, includeSeo = true }) {
   const currentPath = getCurrentPath(initialPath);
   const isBlogPage = currentPath === blogPost.path;
+  const servicePage = servicePageMap.get(currentPath);
   const seo = getSeoForPath(currentPath);
   const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState({
@@ -577,12 +999,23 @@ function App({ initialPath, includeSeo = true }) {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
   };
 
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.location.hash) {
+      return;
+    }
+
+    const targetId = decodeURIComponent(window.location.hash.slice(1));
+    window.requestAnimationFrame(() => {
+      document.getElementById(targetId)?.scrollIntoView();
+    });
+  }, [currentPath]);
+
   return (
     <div className="min-h-screen bg-paper text-forest-900">
       {includeSeo && <Seo {...seo} />}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-timber-300/20 bg-forest-900 text-white shadow-[0_12px_36px_rgba(16,34,25,0.2)]">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
-          <button className="flex min-w-0 items-center gap-3 text-left" onClick={() => goTo("anasayfa")}>
+          <a className="flex min-w-0 items-center gap-3 text-left" href="/">
             <span className="grid h-14 w-14 shrink-0 place-items-center overflow-visible rounded-md border border-timber-300/30 bg-[#0b1510] p-1 shadow-sm">
               <img className="h-full w-full object-contain" src={logoSrc} alt={`${businessName} logo`} />
             </span>
@@ -590,7 +1023,7 @@ function App({ initialPath, includeSeo = true }) {
               <span className="block truncate text-base font-extrabold">{businessName}</span>
               <span className="block truncate text-xs font-semibold text-white/65">Kayseri 2. el palet alım satımı</span>
             </span>
-          </button>
+          </a>
 
           <nav className="hidden items-center gap-5 text-sm font-extrabold text-white/86 xl:flex">
             {navItems.map(([label, id]) => (
@@ -601,9 +1034,9 @@ function App({ initialPath, includeSeo = true }) {
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
-            <a className="inline-flex h-11 items-center gap-2 rounded-md border border-white/25 bg-white/6 px-4 text-sm font-extrabold text-white" href={`tel:+${whatsappPhone}`}>
+            <a className="inline-flex h-11 shrink-0 items-center gap-2 rounded-md border border-white/25 bg-white/6 px-4 text-sm font-extrabold text-white" href={`tel:+${whatsappPhone}`}>
               <Phone size={17} />
-              {phoneDisplay}
+              <span className="whitespace-nowrap">{phoneDisplay}</span>
             </a>
             <button className="inline-flex h-11 items-center gap-2 rounded-md bg-timber-300 px-4 text-sm font-extrabold text-forest-900" onClick={() => goTo("teklif")}>
               Teklif Al
@@ -636,6 +1069,18 @@ function App({ initialPath, includeSeo = true }) {
                 </button>
               ))}
             </div>
+            <div className="mt-3 grid gap-1 border-t border-white/10 pt-3">
+              {servicePages.map((page) => (
+                <a
+                  key={page.path}
+                  className="rounded-md px-3 py-3 text-left text-sm font-bold text-white/80 hover:bg-white/10"
+                  href={page.path}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {page.navLabel}
+                </a>
+              ))}
+            </div>
           </div>
         )}
       </header>
@@ -643,6 +1088,8 @@ function App({ initialPath, includeSeo = true }) {
       <main id="anasayfa">
         {isBlogPage ? (
           <BlogArticle />
+        ) : servicePage ? (
+          <ServicePage page={servicePage} />
         ) : (
           <>
         <section className="relative min-h-[92vh] overflow-hidden text-white">
@@ -756,7 +1203,7 @@ function App({ initialPath, includeSeo = true }) {
           </div>
         </section>
 
-        <section id="hizmetler" className="py-16 sm:py-24">
+        <section id="hizmet-ozeti" className="py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
               <p className="section-kicker">Hizmetler</p>
@@ -783,6 +1230,8 @@ function App({ initialPath, includeSeo = true }) {
             </div>
           </div>
         </section>
+
+        <ServicePagesSection />
 
         <section id="paletler" className="bg-white py-16 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -1067,7 +1516,7 @@ function App({ initialPath, includeSeo = true }) {
       </main>
 
       <footer id="iletisim" className="bg-[#0b1510] text-white">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_0.9fr_0.9fr] lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1.1fr_0.8fr_0.8fr_1fr] lg:px-8">
           <div>
             <div className="flex items-center gap-4">
               <span className="grid h-24 w-24 shrink-0 place-items-center rounded-md border border-timber-300/20 bg-[#101610] p-2">
@@ -1099,6 +1548,16 @@ function App({ initialPath, includeSeo = true }) {
                 <button key={id} className="text-left hover:text-white" onClick={() => goTo(id)}>
                   {label}
                 </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="font-black">Hizmet Sayfaları</h3>
+            <div className="mt-4 grid gap-2 text-sm font-bold text-white/68">
+              {servicePages.map((page) => (
+                <a key={page.path} className="hover:text-white" href={page.path}>
+                  {page.navLabel}
+                </a>
               ))}
             </div>
           </div>
